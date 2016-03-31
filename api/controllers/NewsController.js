@@ -19,18 +19,27 @@ module.exports = {
     var params=req.params.all();
     var user="motxu";
     var folder="../../assets/uploads/news/"+user;
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     console.log('start create');
     console.log(params.image);
     console.log(req.file('image'));
 =======
 >>>>>>> 11e5f050d2dbd915fa246cd1f795421e75abf8f4
+=======
+    console.log('start create');
+    console.log(params.image);
+    console.log(req.file('image'));
+>>>>>>> Stashed changes
     req.file('image').upload({
           // You can apply a file upload limit (in bytes)
           maxBytes: 1000000,
           dirname: folder
         }, function whenDone(err, uploadedFiles) {
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
           console.log('upload done');
           if (err) return res.serverError(err);
           
@@ -38,6 +47,7 @@ module.exports = {
             return res.negotiate(err);
           }
 
+<<<<<<< Updated upstream
 =======
 
           if (err) return res.serverError(err);
@@ -47,6 +57,8 @@ module.exports = {
           }
 
 >>>>>>> 11e5f050d2dbd915fa246cd1f795421e75abf8f4
+=======
+>>>>>>> Stashed changes
           // If no files were uploaded, respond with an error.
           if (uploadedFiles.length === 0){
             return res.badRequest('No file was uploaded');
