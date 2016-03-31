@@ -19,14 +19,18 @@ module.exports = {
     var params=req.params.all();
     var user="motxu";
     var folder="../../assets/uploads/news/"+user;
+<<<<<<< HEAD
     console.log('start create');
     console.log(params.image);
     console.log(req.file('image'));
+=======
+>>>>>>> 11e5f050d2dbd915fa246cd1f795421e75abf8f4
     req.file('image').upload({
           // You can apply a file upload limit (in bytes)
           maxBytes: 1000000,
           dirname: folder
         }, function whenDone(err, uploadedFiles) {
+<<<<<<< HEAD
           console.log('upload done');
           if (err) return res.serverError(err);
           
@@ -34,6 +38,15 @@ module.exports = {
             return res.negotiate(err);
           }
 
+=======
+
+          if (err) return res.serverError(err);
+          
+          if (err) {
+            return res.negotiate(err);
+          }
+
+>>>>>>> 11e5f050d2dbd915fa246cd1f795421e75abf8f4
           // If no files were uploaded, respond with an error.
           if (uploadedFiles.length === 0){
             return res.badRequest('No file was uploaded');
