@@ -16,37 +16,50 @@ module.exports = {
    */
   create: function (req, res) {
     
+    var params=req.params.all();
+    var user="motxu";
+    var folder="../../assets/uploads/news/"+user;
+    console.log('start create');
+    console.log(params.image);
+    console.log(req.file('image'));
     req.file('image').upload({
-    // don't allow the total upload size to exceed ~10MB
-    maxBytes: 10000000
-  },function whenDone(err, uploadedFiles) {
-    if (err) {
-      return res.negotiate(err);
-    }
+          // You can apply a file upload limit (in bytes)
+          maxBytes: 1000000,
+          dirname: folder
+        }, function whenDone(err, uploadedFiles) {
+          console.log('upload done');
+          if (err) return res.serverError(err);
+          
+          if (err) {
+            return res.negotiate(err);
+          }
 
-    // If no files were uploaded, respond with an error.
-    if (uploadedFiles.length === 0){
-      return res.badRequest('No file was uploaded');
-    }
+          // If no files were uploaded, respond with an error.
+          if (uploadedFiles.length === 0){
+            return res.badRequest('No file was uploaded');
+          }
+
+          var fileName=uploadedFiles[0].fd;
+          createNews(fileName);          
+           
+         });
+    function createNews(fileName){
+
+          News.create({caption: params.caption, createdby: "motxu", updatedby:user,imageurl:fileName, categoryid:params.categoryid 
+    }).exec(function createCB(err,created){
+      if (err) return res.serverError(err);      
     
-    News.create({imageUrl:uploadedFiles[0].fd
-}).exec(function createCB(err,created){
-        return res.json({
-          notice: 'Created user with name ' + created.name
-        });
-      });
-    });
+        return res.json(created)
+
+     });
+    }
+
+
   },
 
 
-  /**
-   * `NewsController.update()`
-   */
-  update: function (req, res) {
-    return res.json({
-      todo: 'update() is not implemented yet!'
-    });
-  },
+
+
 
 
   /**
